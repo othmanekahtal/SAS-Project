@@ -1,1 +1,0 @@
-/usr/bin/cc -g   CMakeFiles/SAS_Project.dir/main.c.o  -o SAS_Project 
