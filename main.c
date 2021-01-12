@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct
 {
     char name[50];
@@ -21,7 +20,6 @@ void voting(int i,electors CIN){
     printf("==>You're Elector %d, Please Enter your CNI : ",i+1);
     scanf("%s",CIN.CIN);
 }
-
 void showPresidentName(int loops_again,President presidents[]){
     system("cls");
     printf("*********MENU OF PRESIDENTS:************\n");
@@ -30,7 +28,6 @@ void showPresidentName(int loops_again,President presidents[]){
     }
     printf("==>Choice one of The Presidents :");
 }
-
 void main(){
     int Num_P;
     int Num_E;
@@ -45,8 +42,7 @@ void main(){
         printf("=>Re-enter the number of presidents nominated for the presidential elections (minimum 5) : ");
         scanf("%d", &Num_P);
         system("cls");
-        }
-        else{
+        }else{
             break;
         }
     }
@@ -69,21 +65,11 @@ void main(){
     electors E[Num_E];
     for (int j = 0;j<Num_E; j++){
         voting(j, E[j]);
-        /*
-        ******Replaced By function******
-        for (int k = 0;k<Num_P;k++){
-            printf(" %d.%s\t",k+1,P[k].name);
-        }*/
         showPresidentName(Num_P,P);
         scanf("%d", &choice);
         while (1){
             if (choice>Num_P){
                 printf("You enter %d ,Please Enter Valid Choice !! :\n",choice);
-                /*
-                ******Replaced By function******
-                for (int k = 0;k<Num_P;k++){
-                    printf(" %d.%s\t",k+1,P[k].name);
-                }*/
                 showPresidentName(Num_P,P);
                 scanf("%d", &choice);
             }else{
@@ -93,24 +79,20 @@ void main(){
         P[choice-1].votes += 1;
         printf("Thanks! You voted on %s\n",P[choice-1].name);
         system("cls");
-    }/*
-    printf("Final Result:\n");
-    for(int l =0;l<Num_P;l++){
-        printf("%s\t =\t %d\n", P[l].name,P[l].votes);
-    }*/
+    }
     printf("\n*******FIRST TOUR :*******\n");
     printf("Result:\n");
     for(int l =0;l<Num_P;l++){
         printf("%s\t =\t %d\n", P[l].name,P[l].votes);
-        if (((P[l].votes/Num_E)*100)<(Num_E*0.15)){
-            P[l].winOrLose = 0;
-        }else{
+        if (((P[l].votes/Num_E)*100)>15){
             P[l].winOrLose = 1;
+        }else{
+            P[l].winOrLose = 0;
         }
     }
     printf("*******The Loser and Winner Presidents in first Tour :*******\n");
     for (int s = 0;s<Num_P; s++){
-        if (P[s].winOrLose==1){
+        if (P[s].winOrLose){
             printf("%s : winner\n",P[s].name);
         }else{
             printf("%s : loser\n",P[s].name);
