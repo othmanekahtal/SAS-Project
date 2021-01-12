@@ -137,18 +137,28 @@ void main(){
     system("clear");
     printf("\n****SECOND TOUR****\n");
     printf("Presidents have qualified for the second tour :\n");
-    showPresidentName(counter,P_for_secondTour);
-    scanf("%d",&choice);
-    addVotersToStruct(choice, counter, P_for_secondTour);
+    for (int i = 0;i<Num_E;i++){
+        showPresidentName(counter,P_for_secondTour);
+        scanf("%d",&choice);
+        addVotersToStruct(choice, counter, P_for_secondTour);
+    }
 
     printf("\n*******SECOND TOUR :*******\n");
     printf("Result:\n");
-    int minimumPre;
+    float minimumPre;
     for (int i = 1; i < counter - 1; i++){
         if (P_for_secondTour[i-1].votes>P_for_secondTour[i].votes){
             minimumPre = P_for_secondTour[i].votes;
         }else{
             minimumPre = P_for_secondTour[i].votes;
         }
-    }
+    };
+    for (int i = 0; i < counter; i++){
+        if (P_for_secondTour[i].votes==minimumPre){
+            printf("%d.%s President is loser : %.f \n", i + 1,P_for_secondTour[i].name,P_for_secondTour[i].votes);
+        }
+        else{
+            printf("%d.%s President is winner: %.f \n", i + 1,P_for_secondTour[i].name,P_for_secondTour[i].votes);
+        }
+    };
 };
