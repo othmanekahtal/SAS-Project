@@ -5,6 +5,7 @@ typedef struct
 {
     char name[50];
     int votes;
+    int winOrLose;
 }President;
 void addNamePresident(President president[],int Num__p){
     for (int i = 0;i<Num__p;i++){
@@ -92,9 +93,27 @@ void main(){
         P[choice-1].votes += 1;
         printf("Thanks! You voted on %s\n",P[choice-1].name);
         system("cls");
-    }
+    }/*
     printf("Final Result:\n");
     for(int l =0;l<Num_P;l++){
         printf("%s\t =\t %d\n", P[l].name,P[l].votes);
+    }*/
+    printf("\n*******FIRST TOUR :*******\n");
+    printf("Result:\n");
+    for(int l =0;l<Num_P;l++){
+        printf("%s\t =\t %d\n", P[l].name,P[l].votes);
+        if (((P[l].votes/Num_E)*100)<(Num_E*0.15)){
+            P[l].winOrLose = 0;
+        }else{
+            P[l].winOrLose = 1;
+        }
+    }
+    printf("*******The Loser and Winner Presidents in first Tour :*******\n");
+    for (int s = 0;s<Num_P; s++){
+        if (P[s].winOrLose==1){
+            printf("%s : winner\n",P[s].name);
+        }else{
+            printf("%s : loser\n",P[s].name);
+        }
     }
 };
