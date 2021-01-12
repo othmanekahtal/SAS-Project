@@ -1,12 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 typedef struct
 {
     char name[50];
     float votes;
     float winOrLose;
 } President;
-void addNamePresident(President president[],int Num__p){
+// typedef struct{
+//     char name[50];
+//     float votes;
+//     int winOrLose;
+// } President_of_Second_Tour;
+void addNamePresident(President president[], int Num__p)
+{
     for (int i = 0;i<Num__p;i++){
         printf("==>Enter the Name of the President %d : ",i+1);
         scanf(" %[^\n]s", president[i].name);
@@ -20,22 +27,33 @@ void voting(int i,electors CIN){
     printf("==>You're Elector %d, Please Enter your CNI : ",i+1);
     scanf("%s",CIN.CIN);
 }
-void showPresidentName(int loops_again,President presidents[]){
-    system("clear");
+void showPresidentName(int president_Number,President presidents[]){
     printf("*********MENU OF PRESIDENTS:************\n");
-    for (int k=0;k<loops_again;k++){
+    for (int k=0;k<president_Number;k++){
         printf(" %d.%s\n",k+1,presidents[k].name);
     }
     printf("==>Choice one of The Presidents :");
 }
-    void checkingElectron(int Number_of_electrons,electors electron[],char cin[]){
 
-    }
+void addVotersToStruct(int choice,int NumberOfPresident,President president[]){
+    while (1){
+            if (choice>NumberOfPresident){
+                system("clear");
+                printf("You enter %d ,Please Enter Valid Choice !! :\n",choice);
+                showPresidentName(NumberOfPresident,president);
+                scanf("%d", &choice);
+            }else{
+                break;
+            }
+        }
+        president[choice-1].votes += 1;
+        printf("Thanks! You voted on %s\n",president[choice-1].name);
+}
 void main(){
     int Num_P;
     int Num_E;
     int choice;
-    char ignore[1];
+    char ignore;
     int counter = 0;
     char cin[10];
     printf("welcome to Presidential election\n");
@@ -69,33 +87,60 @@ void main(){
         }
     }
     electors E[Num_E];
+
     for (int j = 0;j<Num_E; j++){
         voting(j, E[j]);
         showPresidentName(Num_P,P);
         scanf("%d", &choice);
-        while (1){
-            if (choice>Num_P){
-                printf("You enter %d ,Please Enter Valid Choice !! :\n",choice);
-                showPresidentName(Num_P,P);
-                scanf("%d", &choice);
-            }else{
-                break;
+        addVotersToStruct(choice, Num_P, P);
+        //     while (1){
+        //         if (choice>Num_P){
+        //             printf("You enter %d ,Please Enter Valid Choice !! :\n",choice);
+        //             showPresidentName(Num_P,P);
+        //             scanf("%d", &choice);
+        //         }else{
+        //             break;
+        //         }
+        //     }
+        //     P[choice-1].votes += 1;
+        //     printf("Thanks! You voted on %s\n",P[choice-1].name);
+        // }
+    }
+        printf("\n*******FIRST TOUR :*******\n");
+        printf("Result:\n");
+        for (int l = 0; l < Num_P; l++)
+        {
+            printf("%s\t =\t %.0f\n", P[l].name, P[l].votes);
+            if (((P[l].votes / Num_E) * 100) > 15)
+            {
+                P[l].winOrLose = 1;
+                counter++;
             }
-        }
-        P[choice-1].votes += 1;
-        printf("Thanks! You voted on %s\n",P[choice-1].name);
+            else
+            {
+                P[l].winOrLose = 0;
+            }
     }
-    printf("\n*******FIRST TOUR :*******\n");
-    printf("Result:\n");
-    for(int l =0;l<Num_P;l++){
-        printf("%s\t =\t %.0f\n", P[l].name,P[l].votes);
-        if (((P[l].votes/Num_E)*100)>15){
-            P[l].winOrLose = 1;
-            counter++;
-        }else{
-            P[l].winOrLose = 0;
-        }
-    }
+
+    printf("\n counter is %d\n",counter);
+    President P_for_secondTour[counter];
+         int xc = 0;
+         for(int xw =0;xw<counter;xw++){
+             while (1){
+                 P_for_secondTour[xw].votes=0;
+                 if(xc==Num_P){
+                     break;
+                 }
+                 if ( ( ((P[xc].votes/Num_E)*100)>15 ) || (xc<Num_P) ){
+                     strcpy(P_for_secondTour[xw].name,P[xc].name);
+                     // You can't do That!!!!
+                     //  P_for_secondTour[xw].name=P[xc].name;
+                     xw++;
+                 }
+                 xc++;
+             }
+     }
+
     printf("*******The Loser and Winner Presidents in first Tour :*******\n");
     for (int s = 0;s<Num_P; s++){
         if (P[s].winOrLose){
@@ -104,16 +149,15 @@ void main(){
             printf("%s : loser\n",P[s].name);
         }
     }
-    printf("Press any Button to got to second Tour");
+    printf("Press any Button and press Enter to got to second Tour : ");
     scanf("%s",&ignore);
     system("clear");
     printf("\n****SECOND TOUR****\n");
     printf("Presidents have qualified for the second tour :\n");
-        for(int r =0;r<counter;r++){
-            printf("%d.%s\n",r+1,P[r].name);
-            P[r].votes = 0;
-        }
-    printf("=> Confirm Your CIN to vote : ");
-    scanf("%s", cin);
-    checkingElectron(Num_E,E,cin);
+    // for (int wza = 0;wza>counter;wza++){
+    //     printf("%d.%s\n", wza + 1, P_for_secondTour[wza].name);
+    // }
+    showPresidentName(counter,P_for_secondTour);
+    scanf("%s",&choice);
+    addVotersToStruct(choice, counter, P_for_secondTour);
 };
