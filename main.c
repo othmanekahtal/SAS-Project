@@ -24,7 +24,7 @@ void voting(int i,electors CIN){
     scanf("%s",CIN.CIN);
 }
 void showPresidentName(int president_Number,President presidents[]){
-    printf("*********MENU OF PRESIDENTS:************\n");
+    //printf("*********MENU OF PRESIDENTS:************\n");
     for (int i=0;i<president_Number;i++){
         printf(" %d.%s\n",i+1,presidents[i].name);
     }
@@ -36,6 +36,7 @@ void addVotersToStruct(int choice,int NumberOfPresident,President president[]){
             if (choice>NumberOfPresident){
                 //system("clear");
                 printf("You enter %d ,Please Enter Valid Choice !! :\n",choice);
+                printf("*********MENU OF PRESIDENTS:************\n");
                 showPresidentName(NumberOfPresident,president);
                 scanf("%d", &choice);
             }else{
@@ -51,6 +52,7 @@ void main(){
     int choice;
     char ignore;
     int counter = 0;
+    int Second_to_final =0;
     char cin[10];
     printf("welcome to Presidential election\n");
     printf("=>Enter the number of presidents nominated for the presidential elections (minimum 5) : ");
@@ -87,6 +89,7 @@ void main(){
 
     for (int i = 0;i<Num_E; i++){
         voting(i, E[i]);
+        printf("*********MENU OF PRESIDENTS:************\n");
         showPresidentName(Num_P,P);
         scanf("%d", &choice);
         addVotersToStruct(choice, Num_P, P);
@@ -107,8 +110,8 @@ void main(){
             P[i].winOrLose = 0;
         }
     }
-
-    printf("\n counter is %d\n",counter);
+    // verify counter prisedent:
+    //printf("\n counter is %d\n",counter);
     President P_for_secondTour[counter];
     int xc = 0;
     for(int i =0;i<counter;i++){
@@ -124,7 +127,10 @@ void main(){
             xc++;
         }
     }
-
+    if (counter==1){
+        printf("The election is Done !\n");
+        printf("%s is winner\n", P_for_secondTour[counter - 1].name);
+    }else{
     printf("*******The Loser and Winner Presidents in first Tour :*******\n");
     for (int i = 0;i<Num_P; i++){
         if (P[i].winOrLose){
@@ -139,6 +145,7 @@ void main(){
     printf("\n****SECOND TOUR****\n");
     printf("Presidents have qualified for the second tour :\n");
     for (int i = 0;i<Num_E;i++){
+        printf("*********MENU OF PRESIDENTS:************\n");
         showPresidentName(counter,P_for_secondTour);
         scanf("%d",&choice);
         addVotersToStruct(choice, counter, P_for_secondTour);
@@ -160,6 +167,45 @@ void main(){
         }
         else{
             printf("%d.%s President is winner: %.f \n", i + 1,P_for_secondTour[i].name,P_for_secondTour[i].votes);
+            Second_to_final++;
         }
     };
+    President P_for_Final[Second_to_final];
+    int counterSecondary = 0;
+    for (int i = 0; i < Second_to_final; i++){
+        while(1){
+            if ( counterSecondary==counter){
+                break;
+            }
+            if (P_for_secondTour[counterSecondary].votes!=minimumPre){
+            P_for_Final[i].votes = 0;
+            strcpy(P_for_Final[i].name,P_for_secondTour[counterSecondary].name);
+        }
+        counterSecondary++;
+        }
+    };
+    printf("Presidents have qualified for the final tour :");
+    // we use here Function :
+    printf("*********MENU OF PRESIDENTS:************\n");
+    showPresidentName(Second_to_final, P_for_Final);
+    scanf("%d",&scanf);
+    addVotersToStruct(choice, Second_to_final, P_for_Final);
+    int maximumPre=0;
+    for (int i = 1; i > Second_to_final - 1; i++){
+        if (P_for_Final[i-1].votes>P_for_Final[i].votes){
+            maximumPre = P_for_Final[i].votes;
+        }else{
+            maximumPre = P_for_Final[i-1].votes;
+        }
+    };
+
+    for (int i = 0; i < Second_to_final; i++){
+        if (P_for_Final[i].votes==maximumPre){
+            printf("%d.%s President is winner : %.f \n", i + 1,P_for_Final[i].name,P_for_Final[i].votes);
+        }
+        else{
+            printf("%d.%s President is loser: %.f \n", i + 1,P_for_Final[i].name,P_for_Final[i].votes);
+        }
+    };
+}
 };
