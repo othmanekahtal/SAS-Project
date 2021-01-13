@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+//system
 typedef struct
 {
     char name[50];
@@ -33,7 +34,7 @@ void showPresidentName(int president_Number,President presidents[]){
 void addVotersToStruct(int choice,int NumberOfPresident,President president[]){
     while (1){
             if (choice>NumberOfPresident){
-                system("clear");
+                //system("clear");
                 printf("You enter %d ,Please Enter Valid Choice !! :\n",choice);
                 showPresidentName(NumberOfPresident,president);
                 scanf("%d", &choice);
@@ -56,27 +57,27 @@ void main(){
     scanf("%d",&Num_P);
     while (1){
         if (Num_P<5){
-        system("clear");
+        //system("clear");
         printf("You Enter %d , it\'s not valid !!!\n",Num_P);
         printf("=>Re-enter the number of presidents nominated for the presidential elections (minimum 5) : ");
         scanf("%d", &Num_P);
-        system("clear");
+        //system("clear");
         }else{
             break;
         }
     }
     President P[Num_P];
     addNamePresident(P,Num_P);
-    system("clear");
+    //system("clear");
     printf("=>Enter The Number of electors (minimum 10):");
     scanf("%d",&Num_E);
     while (1){
-        system("clear");
+        //system("clear");
         if (Num_E<10){
             printf("You Enter %d , it\'s not valid !!!\n",Num_E);
             printf("=>Re-enter the number of electors (minimum 10) : ");
             scanf("%d", &Num_E);
-            system("clear");
+            //system("clear");
         }else{
             break;
         }
@@ -134,7 +135,7 @@ void main(){
     }
     printf("Press Enter to got to second Tour : ");
     scanf("%99[^\n]%*c",&ignore);
-    system("clear");
+    //system("clear");
     printf("\n****SECOND TOUR****\n");
     printf("Presidents have qualified for the second tour :\n");
     for (int i = 0;i<Num_E;i++){
@@ -150,7 +151,7 @@ void main(){
         if (P_for_secondTour[i-1].votes>P_for_secondTour[i].votes){
             minimumPre = P_for_secondTour[i].votes;
         }else{
-            minimumPre = P_for_secondTour[i].votes;
+            minimumPre = P_for_secondTour[i-1].votes;
         }
     };
     for (int i = 0; i < counter; i++){
