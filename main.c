@@ -60,6 +60,7 @@ void addVotersToStruct(int choice,int NumberOfPresident,President president[]){
 void InitializeStructs(President president[],int NumberOfPresident){
     for (int i = 0;i<NumberOfPresident;i++){
         president[i].votes = 0;
+        president[i].winOrLose = 0;
     }
 }
 
@@ -108,8 +109,9 @@ void main(){
     // tour 1
     do{
         if(counter == Num_P){
-            printf("The First Tour is Repeated");
+            printf("\nThe First Tour is Repeated\n");
             InitializeStructs(P, Num_P);
+            counter = 0;
         }
         for (int i = 0;i<Num_E; i++){
         voting(i, E[i]);
