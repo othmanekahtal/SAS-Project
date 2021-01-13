@@ -57,14 +57,19 @@ void addVotersToStruct(int choice,int NumberOfPresident,President president[]){
 
 
 //function for Initialize the Structs:
-void InitializeStructs(President president[],int NumberOfPresident){
-    for (int i = 0;i<NumberOfPresident;i++){
-        president[i].votes = 0;
-        president[i].winOrLose = 0;
+void inRepeatingCase(int counter,int *count,int NumberOfPresident,President president[]){
+    if(counter == NumberOfPresident){
+        printf("\nThe First Tour has been Repeated\n\n");
+        for (int i = 0;i<NumberOfPresident;i++){
+            president[i].votes = 0;
+            president[i].winOrLose = 0;
+        }
     }
+    *count = 0;
 }
 
 void main(){
+    //Variables declaration :
     int Num_P;
     int Num_E;
     int choice;
@@ -75,44 +80,39 @@ void main(){
     int counterSecondary = 0;
     float minimumPre;
     float maximumPre;
-    printf("welcome to Presidential election\n");
+
+    printf("*****WELCOME TO PRESIDENTIAL ELECTION*****\n");
     printf("=>Enter the number of presidents nominated for the presidential elections (minimum 5) : ");
     scanf("%d",&Num_P);
-    while (1){
-        if (Num_P<5){
-        //system("clear");
+
+    while (Num_P<5){
         printf("You Enter %d , it\'s not valid !!!\n",Num_P);
         printf("=>Re-enter the number of presidents nominated for the presidential elections (minimum 5) : ");
         scanf("%d", &Num_P);
-        //system("clear");
-        }else{
-            break;
-        }
     }
+
     President P[Num_P];
+
     addNamePresident(P,Num_P);
+
     //system("clear");
     printf("=>Enter The Number of electors (minimum 10):");
     scanf("%d",&Num_E);
-    while (1){
+
+    while (Num_E<10){
         //system("clear");
-        if (Num_E<10){
             printf("You Enter %d , it\'s not valid !!!\n",Num_E);
             printf("=>Re-enter the number of electors (minimum 10) : ");
             scanf("%d", &Num_E);
             //system("clear");
-        }else{
-            break;
-        }
     }
+
     electors E[Num_E];
+
     // tour 1
     do{
-        if(counter == Num_P){
-            printf("\nThe First Tour is Repeated\n");
-            InitializeStructs(P, Num_P);
-            counter = 0;
-        }
+        inRepeatingCase(counter,&counter, Num_P, P);
+
         for (int i = 0;i<Num_E; i++){
         voting(i, E[i]);
         printf("*********MENU OF PRESIDENTS:************\n");
