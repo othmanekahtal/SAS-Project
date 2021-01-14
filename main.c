@@ -81,12 +81,10 @@ void main() {
     int Num_P_second_tour = 0;
     int Second_to_final = 0;
     char cin[10];
-    int repetitionMin = 0;
-    int repetitionMax = 0;
     float minimumPre=0;
     float maximumPre=0;
-    int Numbermin = 0;
-    int Numbermax = 0;
+    int repi_NumMin = 0;
+    int repi_NumMax = 0;
 
     printf("*****WELCOME TO PRESIDENTIAL ELECTION*****\n");
     printf("=>Enter the number of presidents nominated for the presidential elections (minimum 5) : ");
@@ -120,14 +118,20 @@ void main() {
     do {
         TourOneRepeat(Num_P_second_tour, Num_P, P);
         Num_P_second_tour = 0;
+
+        // THE ELECTION HAS BEEN STARTED
         for (int i = 0; i < Num_E; i++) {
             voting(i, E[i]);
             voting_repetition(Num_P, P, choice);
         }
+
         printf("\n*******FIRST TOUR :*******\n");
         printf("Result:\n");
+
         for (int i = 0; i < Num_P; i++) {
             printf("%s\t =\t %.0f\n", P[i].name, P[i].votes);
+
+            // :::::::::::ERROR:::::::::::
             if (((P[i].votes / Num_E) * 100) > 15) {
                 P[i].winOrLose = 1;
                 Num_P_second_tour++;
@@ -135,6 +139,7 @@ void main() {
                 P[i].winOrLose = 0;
             }
         }
+
     } while (Num_P_second_tour == Num_P);
 
     President P_for_secondTour[Num_P_second_tour];
@@ -144,6 +149,7 @@ void main() {
     for (int i = 0; i < Num_P; i++) {
         if (P[i].winOrLose) {
             strcpy(P_for_secondTour[a].name, P[i].name);
+            P_for_secondTour[a].votes=0;
             a++;
         }
     }
@@ -152,8 +158,12 @@ void main() {
     if (Num_P_second_tour == 1) {
         printf("The election is Done !\n");
         printf("%s is winner\n", P_for_secondTour[0].name);
+
+        // in this case the election is continue :
     } else {
         printf("\n*******The Loser and Winner Presidents in first Tour :*******\n");
+
+        // SHOW THE WINNER AND LOSER IN FIRST TOUR :
         for (int i = 0; i < Num_P; i++) {
             if (P[i].winOrLose) {
                 printf("%s : winner\n", P[i].name);
@@ -161,12 +171,14 @@ void main() {
                 printf("%s : loser\n", P[i].name);
             }
         }
-        //system("clear");
+
         do {
-            if (Numbermin > 1) {
+
+            // initialize the variables and counters
+            if (repi_NumMin > 1) {
                 printf("\nThe second Tour has been Repeated\n\n");
                 minimumPre = 0;
-                Numbermin = 0;
+                repi_NumMin = 0;
                 Second_to_final = 0;
             }
             printf("\n****SECOND TOUR****\n");
@@ -175,6 +187,8 @@ void main() {
                 voting_repetition(Num_P_second_tour, P_for_secondTour, choice);
             }
             printf("\n*******SECOND TOUR :*******\n");
+
+            //SHOW THE RESULT :NUMBER OF VOTE
             printf("Result:\n");
             for (int i = 0; i < Num_P_second_tour; i++) {
                 printf("%s\t =\t %.0f\n", P_for_secondTour[i].name, P_for_secondTour[i].votes);
@@ -187,41 +201,49 @@ void main() {
                     minimumPre = P_for_secondTour[i].votes;
                 }
             }
+
+            // TESTING MINIMUM PRESIDENT :
             printf("\nminimumPre: %.f\n", minimumPre);
 
             for (int i = 0; i < Num_P_second_tour; i++) {
                 if (P_for_secondTour[i].votes == minimumPre) {
-                    Numbermin++;
+                    repi_NumMin++;
                     printf("%d.%s President is loser : %.f \n", i + 1, P_for_secondTour[i].name, P_for_secondTour[i].votes);
                 } else {
                     printf("%d.%s President is winner: %.f \n", i + 1, P_for_secondTour[i].name, P_for_secondTour[i].votes);
                     Second_to_final++;
                 }
             };
-        } while (Numbermin > 1);
+        } while (repi_NumMin > 1);
+
         President P_for_Final[Second_to_final];
+
+        // FOR STORAGE THE STRUCT TO NEW INSTANCE TABLE:
+        int b = 0;
         for (int i = 0; i < Num_P_second_tour; i++) {
             if (P_for_secondTour[i].votes != minimumPre) {
-                strcpy(P_for_Final[repetitionMin].name, P_for_secondTour[i].name);
-                repetitionMin++;
+                strcpy(P_for_Final[b].name, P_for_secondTour[i].name);
+                b++;
             }
         }
         if (Second_to_final == 1) {
             printf("\nThe election is done!! President winner is%s\n", P_for_Final[0].name);
         } else {
             do{
-                if (Numbermax > 1) {
+                if (repi_NumMax > 1) {
                     printf("\nThe second Tour has been Repeated\n\n");
                     maximumPre = 0;
-                    Numbermax = 0;
+                    repi_NumMax = 0;
                 }
                 printf("\n****FINAL TOUR****\n");
                 printf("\nPresidents have qualified for the final tour :\n");
+
                 // we use here Function :
                 for (int i = 0; Num_E; i++) {
                     voting_repetition(Second_to_final, P_for_Final, choice);
                 }
 
+                // FOR GETING THE MAXIMUM PRESIDENT VOTE :
                 maximumPre = P_for_Final[0].votes;
                 for (int i = 0; i < Num_P_second_tour; i++) {
                     if (maximumPre < P_for_Final[0].votes) {
@@ -231,12 +253,12 @@ void main() {
 
                 for (int i = 0; i < Second_to_final; i++) {
                     if (P_for_Final[i].votes == maximumPre) {
-                        repetitionMax++;
+                        repi_NumMax++;
                     }
                 };
 
                 printf("The election is done !!\n");
-                } while (repetitionMax>1);
+                } while (repi_NumMax>1);
                 for (int i = 0; i < Second_to_final; i++) {
                 if (P_for_Final[i].votes == maximumPre) {
                     printf("%d.%s President is winner : %.f \n", i + 1, P_for_Final[i].name, P_for_Final[i].votes);
