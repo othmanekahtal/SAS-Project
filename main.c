@@ -244,23 +244,26 @@ void main() {
 
                 // FOR GETING THE MAXIMUM PRESIDENT VOTE :
                 maximumPre = P_for_Final[0].votes;
-                for (int i = 0; i < Num_P_second_tour; i++) {
+                for (int i = 0; i < Second_to_final; i++) {
                     if (maximumPre < P_for_Final[i].votes) {
                         maximumPre = P_for_Final[i].votes;
                     }
                 }
 
+                // for testing maximum
+                printf("The maximum : %.f",maximumPre);
                 for (int i = 0; i < Second_to_final; i++) {
                     if (P_for_Final[i].votes == maximumPre) {
                         repeat_NumMax++;
                     }
                 };
-
                 printf("The election is done !!\n");
+
+                // FINAL TOUR HAS BEEN END:
                 } while (repeat_NumMax>1);
                 for (int i = 0; i < Second_to_final; i++) {
                 if (P_for_Final[i].votes == maximumPre) {
-                    printf("%d.%s President is winner : %.f \n", i + 1, P_for_Final[i].name, P_for_Final[i].votes);
+                    printf("%d.%s President is winner : %f \n", i + 1, P_for_Final[i].name, P_for_Final[i].votes);
                 } else {
                     printf("%d.%s President is loser: %.f \n", i + 1, P_for_Final[i].name, P_for_Final[i].votes);
                 }
