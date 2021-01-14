@@ -208,19 +208,35 @@ void main() {
         if (Second_to_final == 1) {
             printf("\nThe election is done!! President winner is%s\n", P_for_Final[0].name);
         } else {
-            printf("\nPresidents have qualified for the final tour :\n");
-            // we use here Function :
-            for (int i = 0; Num_E; i++) {
-                voting_repetition(Second_to_final, P_for_Final, choice);
-            }
-
-            maximumPre = P_for_Final[0].votes;
-            for (int i = 0; i < Num_P_second_tour; i++) {
-                if (maximumPre < P_for_Final[0].votes) {
-                    maximumPre = P_for_Final[i].votes;
+            do{
+                if (Numbermax > 1) {
+                    printf("\nThe second Tour has been Repeated\n\n");
+                    maximumPre = 0;
+                    Numbermax = 0;
                 }
-            }
-            for (int i = 0; i < Second_to_final; i++) {
+                printf("\n****FINAL TOUR****\n");
+                printf("\nPresidents have qualified for the final tour :\n");
+                // we use here Function :
+                for (int i = 0; Num_E; i++) {
+                    voting_repetition(Second_to_final, P_for_Final, choice);
+                }
+
+                maximumPre = P_for_Final[0].votes;
+                for (int i = 0; i < Num_P_second_tour; i++) {
+                    if (maximumPre < P_for_Final[0].votes) {
+                        maximumPre = P_for_Final[i].votes;
+                    }
+                }
+
+                for (int i = 0; i < Second_to_final; i++) {
+                    if (P_for_Final[i].votes == maximumPre) {
+                        Numbermax++;
+                    }
+                };
+
+                printf("The election is done !!\n");
+                } while (Numbermax>1);
+                for (int i = 0; i < Second_to_final; i++) {
                 if (P_for_Final[i].votes == maximumPre) {
                     printf("%d.%s President is winner : %.f \n", i + 1, P_for_Final[i].name, P_for_Final[i].votes);
                 } else {
