@@ -230,7 +230,7 @@ void main() {
         } else {
             do{
                 if (repeat_NumMax > 1) {
-                    printf("\nThe second Tour has been Repeated\n\n");
+                    printf("\nThe FINAL TOUR has been Repeated\n\n");
                     maximumPre = 0;
                     repeat_NumMax = 0;
                 }
@@ -257,7 +257,7 @@ void main() {
                         repeat_NumMax++;
                     }
                 };
-                printf("The election is done !!\n");
+                printf("\nThe election is done !!\n");
 
                 // FINAL TOUR HAS BEEN END:
                 } while (repeat_NumMax>1);
