@@ -82,8 +82,9 @@ void main() {
     int Second_to_final = 0;
     char cin[10];
     int repetitionMin = 0;
-    float minimumPre;
-    float maximumPre;
+    int repetitionMax = 0;
+    float minimumPre=0;
+    float maximumPre=0;
     int Numbermin = 0;
     int Numbermax = 0;
 
@@ -200,7 +201,7 @@ void main() {
         } while (Numbermin > 1);
         President P_for_Final[Second_to_final];
         for (int i = 0; i < Num_P_second_tour; i++) {
-            if (!P_for_secondTour[i].votes == minimumPre) {
+            if (P_for_secondTour[i].votes != minimumPre) {
                 strcpy(P_for_Final[repetitionMin].name, P_for_secondTour[i].name);
                 repetitionMin++;
             }
@@ -230,12 +231,12 @@ void main() {
 
                 for (int i = 0; i < Second_to_final; i++) {
                     if (P_for_Final[i].votes == maximumPre) {
-                        Numbermax++;
+                        repetitionMax++;
                     }
                 };
 
                 printf("The election is done !!\n");
-                } while (Numbermax>1);
+                } while (repetitionMax>1);
                 for (int i = 0; i < Second_to_final; i++) {
                 if (P_for_Final[i].votes == maximumPre) {
                     printf("%d.%s President is winner : %.f \n", i + 1, P_for_Final[i].name, P_for_Final[i].votes);
